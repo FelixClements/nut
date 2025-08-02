@@ -6,7 +6,7 @@ from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_PSS, PKCS1_v1_5, pss
 
-from nut import Print, aes128
+from nut import Print, aes128, Config
 
 keys = {}
 titleKeks = []
@@ -151,7 +151,7 @@ def load(fileName):
 
 
 try:
-	load('keys.txt')
+	load(Config.paths.keys)
 except BaseException as e:
 	try:
 		load('prod.keys')
