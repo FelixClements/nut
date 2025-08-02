@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  nut-cli:
+    image: ghcr.io/felixclements/nut-cli:latest
+    volumes:
+      - ./keys.txt:/app/keys.txt
+  nut-gui:
+    image: ghcr.io/felixclements/nut-gui:latest
+    volumes:
+      - ./keys.txt:/app/keys.txt
+    ports:
+      - "8080:8080"
