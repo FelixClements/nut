@@ -120,7 +120,7 @@ class Paths:  # pylint: disable=too-many-instance-attributes
 
 		self.scan = ['.']
 		self.titleDatabase = 'titledb'
-		self.keys = 'keys.txt'
+		self.keys = 'conf/keys.txt'
 		self.calibration = 'PRODINFO.bin'
 		self.shopNCert = 'ShopN.pem'
 		self.nspOut = '_NSPOUT'

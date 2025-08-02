@@ -3,10 +3,10 @@ services:
   nut-cli:
     image: ghcr.io/felixclements/nut-cli:latest
     volumes:
-      - ./keys.txt:/app/keys.txt
+      - ./conf:/app/conf
   nut-gui:
     image: ghcr.io/felixclements/nut-gui:latest
     volumes:
-      - ./keys.txt:/app/keys.txt
+      - ./conf:/app/conf
     ports:
       - "8080:8080"
