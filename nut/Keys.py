@@ -151,12 +151,15 @@ def load(fileName):
 
 
 try:
-	load(Config.paths.keys)
+	load('conf/keys.txt')
 except BaseException as e:
 	try:
-		load('prod.keys')
-	except BaseException:
-		Print.error('could not load find or load keys.txt, all crypto operations will fail. See keys_template.txt for an example of how this file should look')
+		load('keys.txt')
+	except BaseException as e:
+		try:
+			load('prod.keys')
+		except BaseException:
+			Print.error('could not load find or load keys.txt, all crypto operations will fail. See keys_template.txt for an example of how this file should look')
 
 # for k in titleKeks:
 #	Print.info('titleKek = ' + k)
