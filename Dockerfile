@@ -20,6 +20,10 @@ RUN addgroup --gid 1000 $USER && \
     mkdir -p /etc/fixuid && \
     printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
 
+COPY . ./
+
+RUN chown -R $USER:$GROUP /app
+
 USER $USER:$GROUP
 
 ENTRYPOINT ["fixuid"]
