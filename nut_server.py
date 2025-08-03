@@ -9,6 +9,7 @@ import nut
 import Server
 from nut import Usb
 from nut import Hook
+import nut.Watcher
 
 def usbThread():
     Usb.daemon()
@@ -31,6 +32,7 @@ def run():
     nut.initTitles()
     nut.initFiles()
     nut.scan()
+    nut.Watcher.start()
 
     Hook.init()
 

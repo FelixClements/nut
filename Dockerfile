@@ -1,32 +1,28 @@
 FROM python:3.9
 
+ARG APP_USER=nut
+ARG APP_UID=1000
+ARG APP_GID=1000
+
 RUN apt-get update && apt-get install -y libusb-1.0-0-dev python3-pyqt5 libssl-dev libcurl4-openssl-dev
 
 WORKDIR /app
 
-COPY requirements.txt ./
+COPY requirements.txt ./\n
 
 RUN pip install -r requirements.txt
 
-COPY . ./
+COPY . ./\n
 
-ARG USER=nut
-ARG GROUP=nut
-RUN addgroup --gid 1000 $USER && \
-    adduser --uid 1000 --ingroup $GROUP --home /home/$USER --shell /bin/sh --disabled-password --gecos "" $USER && \
-    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5.1/fixuid-0.5.1-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
-    chown root:root /usr/local/bin/fixuid && \
-    chmod 4755 /usr/local/bin/fixuid && \
-    mkdir -p /etc/fixuid && \
-    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+# Create the application group and user with specified UID/GID
+ RUN addgroup --gid $APP_GID $APP_USER && \
+     adduser --uid $APP_UID --ingroup $APP_USER --home /home/$APP_USER --shell /bin/sh --disabled-password --gecos "" $APP_USER
 
-COPY . ./
+# Ensure the /app directory is owned by the new user
+RUN chown -R $APP_USER:$APP_USER /app
 
-RUN chown -R $USER:$GROUP /app
-
-USER $USER:$GROUP
-
-ENTRYPOINT ["fixuid"]
+# Switch to the non-root user
+USER $APP_USER
 
 VOLUME /data
 
