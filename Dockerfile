@@ -28,4 +28,4 @@ USER $USER:$GROUP
 
 ENTRYPOINT ["fixuid"]
 
-CMD ["python", "/app/nut_gui.py"]
+CMD ["python", "/app/nut.py", "--server"]

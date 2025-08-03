@@ -35,6 +35,8 @@ _NSPOUT/
 *.xci
 *.xcz
 
+venv
+
 keys.txt
 prod.keys
 gdrive.token
