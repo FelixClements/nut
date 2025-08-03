@@ -5,10 +5,10 @@ from nut import Print
 
 users = {}
 
-def load():
+def _load_users():
     global users
     try:
-        with open(os.path.join(Config.paths.conf, 'users.conf'), 'r') as f:
+        with open(Config.paths.users, 'r') as f:
             users = json.load(f)
         Print.info("Loaded users.conf")
     except FileNotFoundError:
@@ -18,8 +18,9 @@ def load():
         Print.error(f"Error loading users.conf: {e}")
         users = {}
 
+_load_users() # Load users when the module is imported
+
 def auth(username, password, ip):
-    load()
     if username in users and users[username] == password:
         Print.info(f"User {username} authenticated from {ip}")
         return username
