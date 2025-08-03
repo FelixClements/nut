@@ -16,6 +16,7 @@ from urllib.parse import urlparse
 from urllib.parse import parse_qs
 import collections
 import queue
+from nut import Users
 
 import Server.Controller.Api
 import __main__
@@ -268,15 +269,15 @@ class NutHandler(http.server.BaseHTTPRequestHandler):
 			request.setHead(True)
 			response.setHead(True)
 
-			#if self.headers['Authorization'] is None:
-			#	return Response401(request, response)
+			if self.headers['Authorization'] is None:
+				return Response401(request, response)
 
-			#id, password = base64.b64decode(self.headers['Authorization'].split(' ')[1]).decode().split(':')
+			id, password = base64.b64decode(self.headers['Authorization'].split(' ')[1]).decode().split(':')
 
-			#request.user = Users.auth(id, password, self.client_address[0])
+			request.user = Users.auth(id, password, self.client_address[0])
 
-			#if not request.user:
-			#	return Response401(request, response)
+			if not request.user:
+				return Response401(request, response)
 
 			try:
 				if len(request.bits) > 0 and request.bits[0] in mappings:
@@ -292,15 +293,15 @@ class NutHandler(http.server.BaseHTTPRequestHandler):
 	def do(self, verb='get'):
 		request = NutRequest(self)
 		with NutResponse(self) as response:
-			#if self.headers['Authorization'] is None:
-			#	return Response401(request, response)
+			if self.headers['Authorization'] is None:
+				return Response401(request, response)
 
-			#id, password = base64.b64decode(self.headers['Authorization'].split(' ')[1]).decode().split(':')
+			id, password = base64.b64decode(self.headers['Authorization'].split(' ')[1]).decode().split(':')
 
-			#request.user = Users.auth(id, password, self.client_address[0])
+			request.user = Users.auth(id, password, self.client_address[0])
 
-			#if not request.user:
-			#	return Response401(request, response)
+			if not request.user:
+				return Response401(request, response)
 
 			try:
 				if not route(request, response, verb):

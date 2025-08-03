@@ -124,7 +124,8 @@ class Paths:  # pylint: disable=too-many-instance-attributes
 		self.calibration = 'PRODINFO.bin'
 		self.shopNCert = 'ShopN.pem'
 		self.nspOut = '_NSPOUT'
-		self.titleImages = 'titles/images/'
+		        self.titleImages = 'titles/images/'
+        self.users = 'conf/users.conf'
 
 		self.duplicates = 'duplicates/'
 
