@@ -1,9 +1,10 @@
 version: '3.8'
 services:
   nut-cli:
-    image: ghcr.io/felixclements/nut-cli:latest
+    image: ghcr.io/felixclements/nut:latest
     volumes:
-      - ./conf:/app/conf
-      - ./data:/data
+      - /path/to/conf:/app/conf
+      - /path/to/titledb:/app/titledb
+      - /path/to/data:/data
     ports:
       - "9000:9000"
