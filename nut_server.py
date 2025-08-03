@@ -32,9 +32,12 @@ def run():
     nut.initTitles()
     nut.initFiles()
     nut.scan()
-    nut.Watcher.start()
 
     Hook.init()
+
+    print("Starting file watcher...")
+    nut.Watcher.start()
+    print("File watcher started.")
 
     threads = []
     threads.append(threading.Thread(target=usbThread, args=[]))
@@ -46,7 +49,8 @@ def run():
 
     try:
         while True:
-            time.sleep(1)
+            time.sleep(10) # Sleep for 10 seconds
+            print("nut_server.py: Server still running...")
     except KeyboardInterrupt:
         print('Exiting...')
 

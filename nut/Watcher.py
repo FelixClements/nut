@@ -1,6 +1,6 @@
 import time
 import os.path
-from watchdog.observers import Observer
+from watchdog.observers.polling import PollingObserver as Observer
 from watchdog.events import RegexMatchingEventHandler
 from nut import Nsps
 from nut import Config
