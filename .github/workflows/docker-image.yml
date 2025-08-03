@@ -25,17 +25,10 @@ jobs:
         registry: ghcr.io
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build and push nut-gui
+    - name: Build and push nut
       uses: docker/build-push-action@v5
       with:
         context: .
         file: Dockerfile
         push: ${{ startsWith(github.ref, 'refs/tags/') }}
-        tags: ghcr.io/${{ env.LOWERCASE_OWNER }}/nut-gui:latest
-    - name: Build and push nut-cli
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: Dockerfile.cli
-        push: ${{ startsWith(github.ref, 'refs/tags/') }}
-        tags: ghcr.io/${{ env.LOWERCASE_OWNER }}/nut-cli:latest
+        tags: ghcr.io/${{ env.LOWERCASE_OWNER }}/nut:latest
