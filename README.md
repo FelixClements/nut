@@ -32,7 +32,7 @@ The GUI has the ability to set the most common configuration options, see the be
 
 The IP/Port/User/Password are the information needed to login to the NUT server. To the right of those, you can also see a `USB Status` indicator, indicating whether a Tinfoil client is connected via USB with the server.
 
-THe body shows a table containing a list of files that were detected by NUT from the scanned paths. It shows the title count, file name, title ID, title type and title size for each scanned file.
+The body shows a table containing a list of files that were detected by NUT from the scanned paths. It shows the title count, file name, title ID, title type and title size for each scanned file.
 
 The footer shows the progress information of any file that is currently being downloaded from the server.
 
@@ -103,10 +103,58 @@ PYCURL_SSL_LIBRARY=openssl LDFLAGS="-L/usr/local/opt/openssl/lib" CPPFLAGS="-I/u
 
 ### Docker
 
-```console
-$ docker build --tag nut https://github.com/blawar/nut.git
-$ docker run --rm -it --network=host --env=DISPLAY --volume=/tmp/.X11-unix:/tmp/.X11-unix --volume="$PWD:$PWD" --workdir="$PWD" --user=$(id -u):$(id -g) nut
+To run NUT in a Docker container, use the `nut_server.py` script as the entry point. This version runs the server without a GUI, making it suitable for Docker environments.
+
+**Using Docker Compose (Recommended):**
+
+For easier management of the Docker container, it is recommended to use `docker-compose`. A `docker-compose.yml` file is provided in the repository.
+
+1.  **Build the Docker image:**
+    ```console
+    $ docker-compose build
+    ```
+
+2.  **Run the Docker container:**
+    ```console
+    $ docker-compose up -d
+    ```
+    This will start the `nut-cli` service in the background.
+
+    *   The `docker-compose.yml` file maps the local `conf/` directory to `/app/conf` inside the container, allowing you to manage your `nut.conf` and `users.conf` files easily.
+    *   It also maps a local `data/` directory to `/data` inside the container. You should place your NSP/NSZ/XCI/XCZ files in this local `data/` directory, and the server will automatically detect them.
+    *   The server will listen on port 9000, which is exposed to your host machine.
+
+**Manual Docker Commands (Advanced):**
+
+If you prefer to use manual Docker commands:
+
+1.  **Build the Docker image:**
+    ```console
+    $ docker build --tag nut .
+    ```
+
+2.  **Run the Docker container:**
+    ```console
+    $ docker run --rm -it --network=host -p 9000:9000 -v /path/to/your/files:/data nut
+    ```
+    *   Replace `/path/to/your/files` with the absolute path to the directory on your host machine where your NSP/NSZ/XCI/XCZ files are located. This directory will be mounted to `/data` inside the container.
+    *   The server will listen on port 9000.
+
+**Authentication:**
+The server now supports basic authentication. You need to create a `users.conf` file in the `conf/` directory (e.g., `conf/users.conf`) with your desired usernames and passwords in JSON format:
+```json
+{
+  "username": "password",
+  "admin": "adminpass"
+}
 ```
+The server will load this file on startup.
+
+**File Watching:**
+The Dockerized server uses a polling-based file watcher to detect changes in the mounted `/data` directory. This ensures that new files added to the mounted volume are automatically recognized by the server.
+
+**Production Considerations:**
+The Docker image is configured to run as a non-root user with a specified UID/GID, which is a good practice for production environments. You can specify the `APP_UID` and `APP_GID` build arguments when building the image to match your host user's UID/GID if you are mounting volumes.
 
 ------
 
