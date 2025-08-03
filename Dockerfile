@@ -30,4 +30,4 @@ ENTRYPOINT ["fixuid"]
 
 VOLUME /data
 
-CMD ["python", "/app/nut.py", "--server", "--scan-path", "/data"]
+CMD ["python", "/app/nut.py", "--server"]
