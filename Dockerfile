@@ -8,11 +8,11 @@ RUN apt-get update && apt-get install -y libusb-1.0-0-dev python3-pyqt5 libssl-d
 
 WORKDIR /app
 
-COPY requirements.txt ./\n
+COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY . ./\n
+COPY . ./
 
 # Create the application group and user with specified UID/GID
  RUN addgroup --gid $APP_GID $APP_USER && \
