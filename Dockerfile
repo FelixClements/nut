@@ -28,4 +28,6 @@ USER $USER:$GROUP
 
 ENTRYPOINT ["fixuid"]
 
-CMD ["python", "/app/nut.py", "--server"]
+VOLUME /data
+
+CMD ["python", "/app/nut.py", "--server", "--scan-path", "/data"]

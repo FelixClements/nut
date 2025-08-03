@@ -4,6 +4,7 @@ services:
     image: ghcr.io/felixclements/nut-cli:latest
     volumes:
       - ./conf:/app/conf
+      - ./data:/data
   nut-gui:
     image: ghcr.io/felixclements/nut-gui:latest
     volumes:
