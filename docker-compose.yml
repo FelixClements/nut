@@ -1,13 +1,9 @@
 version: '3.8'
 services:
-  nut-cli:
+  nut-gui:
     image: ghcr.io/felixclements/nut-cli:latest
     volumes:
       - ./conf:/app/conf
       - ./data:/data
-  nut-gui:
-    image: ghcr.io/felixclements/nut-gui:latest
-    volumes:
-      - ./conf:/app/conf
     ports:
-      - "8080:8080"
+      - "9000:9000"
