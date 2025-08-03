@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  nut-gui:
+  nut-cli:
     image: ghcr.io/felixclements/nut-cli:latest
     volumes:
       - ./conf:/app/conf
